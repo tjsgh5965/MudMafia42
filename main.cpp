@@ -3,6 +3,9 @@
 int subJobCount = 2;
 int specialJobCount = 4;
 
+int dayCount = 0;
+bool isNight = false;
+
 int randNum(int start, int end)
 {
 	random_device rd;
@@ -42,15 +45,46 @@ vector<Character> raffleJob(int memberCount) {
 		specialJobList.erase(iter);
 	}
 
+	// 직업 섞기
+	int idx1, idx2, temp;
+	for (int i = 0; i < memberCount * 2; i++)
+	{
+		idx1 = randNum(0, memberCount - 1);
+		idx2 = randNum(0, memberCount - 1);
+		swap(v[idx1], v[idx2]);
+	}
+
 	return v;
+}
+
+void Debug(vector<Character> v) {
+	for (int i = 0; i < v.size(); i++)
+		cout << i + 1 << "픽 : " << v[i].printJob() << endl;
+	cout << "\n\n";
 }
 
 int main() {
 	
-	vector<Character> v = raffleJob(8);
+	vector<Character> v = raffleJob(MEMBER);
+	int myPick = randNum(0, MEMBER - 1);
+	Character me = v[myPick];
 
-	for (int i = 0; i < v.size(); i++)
-		cout << i + 1 << "픽 : " << v[i].printJob() << endl;
+	//Debug(v);
+
+	cout << "당신의 직업은 " << me.printJob() << "입니다.\n\n";
+	me.writeJob[myPick] = me.job;
+
+	while (true)
+	{
+		isNight = !isNight;
+		cout <<endl << ((isNight) ? "밤이 되었습니다." : "낮이 되었습니다.") << "\n\n";
+		me.memoPrint(v);
+		if (isNight) {
+			dayCount++;
+			me.useSkill(v, MEMBER);
+		}
+		else pause;
+	}
 
 	return 0;
 }

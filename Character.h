@@ -1,10 +1,10 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include <random>
-#include <cstdlib>
-#include <ctime>
+#include "memo.h"
+
+#define pause system("pause>null");
+#define cls system("cls");
+
+#define MEMBER 8
 
 using namespace std;
 
@@ -19,15 +19,18 @@ using namespace std;
 // -1 : ½ºÆÄÀÌ
 // -2 : Áü½ÂÀÎ°£
 
-class Character
+class Character : public memo
 {
 public:
 	int job = 0;
 	
-	Character(int job) {
+	Character(int job) : memo(MEMBER) {
 		this->job = job;
 	}
 
 	string printJob();
+
+	void memoPrint(vector<Character> v);
+	void useSkill(vector<Character> v, int member);
 };
 
