@@ -73,17 +73,31 @@ int main() {
 
 	cout << "당신의 직업은 " << me.printJob() << "입니다.\n\n";
 	me.writeJob[myPick] = me.job;
+	if (me.writeJob[myPick] == 1) // 마피아일 때 짝맢 구분하기
+	{
+		for (int i = 0; i < v.size(); i++) {
+			if (v[i].job == 1 && myPick != i) {
+				me.writeJob[i] = 1;
+				me.noChange[i] = true;
+				break;
+			}
+		}
+	}
 
 	while (true)
 	{
 		isNight = !isNight;
-		cout <<endl << ((isNight) ? "밤이 되었습니다." : "낮이 되었습니다.") << "\n\n";
-		me.memoPrint(v);
+		cout << endl << ((isNight) ? "밤이 되었습니다." : "낮이 되었습니다.") << "\n\n";
 		if (isNight) {
 			dayCount++;
-			me.useSkill(v, MEMBER);
+			me.memoPrint(v);
+			if (!(me.job == 4 && dayCount == 1)) me.useSkill(v, MEMBER);
 		}
-		else pause;
+		else {
+			me.isMorning(v);
+			me.memoPrint(v);
+			pause;
+		}
 	}
 
 	return 0;

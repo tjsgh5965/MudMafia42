@@ -23,14 +23,17 @@ class Character : public memo
 {
 public:
 	int job = 0;
-	
+	bool death = false;
+	bool repoterTarget = false;
+	bool isUseSkill = false; // 1회용 스킬 직업한테만 해당
 	Character(int job) : memo(MEMBER) {
 		this->job = job;
 	}
 
 	string printJob();
 
-	void memoPrint(vector<Character> v);
-	void useSkill(vector<Character> v, int member);
+	void memoPrint(vector<Character> &v);
+	void useSkill(vector<Character> &v, int member);
+	void isMorning(vector<Character> &v);
 };
 
